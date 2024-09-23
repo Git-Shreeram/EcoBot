@@ -1,7 +1,8 @@
-import os
-import logging
 from flask import Flask, request, jsonify, render_template
 import requests
+import os
+import logging
+import io
 
 app = Flask(__name__)
 
@@ -12,15 +13,36 @@ AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "default_api_key")
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+def create_embeddings(document_content):
+    if document_content:
+        # Logic to create embeddings
+        return "embeddings"
+    return None
+
+def rag_technique(question):
+    if question == "irrelevant question":
+        return None
+    # Logic to retrieve relevant information
+    return "relevant information"
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_document():
+    file = request.files.get('file')
+    if file and file.read():
+        # Logic to save the file
+        return jsonify({'message': 'Document uploaded successfully'}), 200
+    return jsonify({'error': 'No file content provided'}), 400
 
 @app.route('/api/messages', methods=['POST'])
 def api_messages():
     try:
         user_message = request.json.get('message')
         if not user_message:
+            logging.error("No message provided")
             return jsonify({"error": "No message provided"}), 400
 
         headers = {
@@ -49,4 +71,4 @@ def api_messages():
         return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=int(os.getenv("PORT", 5000)), debug=True)
