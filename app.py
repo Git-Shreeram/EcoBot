@@ -1,17 +1,20 @@
+import os
+import logging
 from flask import Flask, request, jsonify, render_template
 import requests
 
 app = Flask(__name__)
 
-# Azure OpenAI details
-AZURE_OPENAI_ENDPOINT = "https://openai.azure.com/"  # Replace with your Azure OpenAI endpoint
-AZURE_OPENAI_API_KEY = "OPENAI_API_KEY"  # Replace with your Azure OpenAI API key
+# Load configuration from environment variables
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT", "default_endpoint")
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "default_api_key")
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/api/messages', methods=['POST'])
 def api_messages():
@@ -22,7 +25,7 @@ def api_messages():
 
         headers = {
             "Content-Type": "application/json",
-            "api-key": AZURE_OPENAI_API_KEY  # Changed from Authorization to api-key
+            "api-key": AZURE_OPENAI_API_KEY
         }
         data = {
             "messages": [{"role": "user", "content": user_message}]
@@ -38,13 +41,12 @@ def api_messages():
             return jsonify({"response": bot_response})
         else:
             error_message = f"Error from Azure OpenAI: {response.status_code} {response.text}"
-            print(error_message)  # Log the error message
+            logging.error(error_message)
             return jsonify({"error": "Failed to get a response from Azure OpenAI"}), response.status_code
     except Exception as e:
         error_message = f"Exception: {str(e)}"
-        print(error_message)  # Log the exception
+        logging.exception(error_message)
         return jsonify({"error": "Internal Server Error"}), 500
-
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
