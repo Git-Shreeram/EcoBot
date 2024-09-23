@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ecobot - Your Carbon Footprint Assistant</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/EcoBot.ico') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecobot - Your Carbon Footprint Assistant</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/EcoBot.ico') }}">
 </head>
 <body>
-<header>
-<h1>Ecobot</h1>
-<p>Your Carbon Footprint Assistant</p>
-</header>
-<main>
-<section class="intro">
-<h2>Welcome to Ecobot!</h2>
-<p>Learn how to reduce your carbon footprint with personalized advice and actionable steps.</p>
-</section>
-<section class="chatbot">
-<div id="chatContainer"></div>
-<div class="input-container">
-    <input type="text" id="messageInput" placeholder="Type here like what is carbon footprint">
-    <button id="sendButton">Send</button>
-</div>
-</section>
-</main>
-<footer>
-<p>&copy; 2024 Ecobot. All rights reserved.</p>
-</footer>
-<script src="/static/js/script.js"></script>
+    <header>
+        <h1>Ecobot</h1>
+        <p>Your Carbon Footprint Assistant</p>
+    </header>
+    <main>
+        <section class="intro">
+            <h2>Welcome to Ecobot!</h2>
+            <p>Learn how to reduce your carbon footprint with personalized advice and actionable steps.</p>
+        </section>
+        <section class="chatbot">
+            <div id="chatContainer"></div>
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="Type here like what is carbon footprint">
+                <button id="sendButton">Send</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ecobot. All rights reserved.</p>
+    </footer>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
